@@ -16,8 +16,7 @@ users to:
 - Delete tasks.
 - Persist tasks in the browser's `localStorage`.
 - Navigate between the task list and a separate statistics page.
-
-The statistics page is currently a blank page intended for future development.
+- View task completion statistics.
 
 ## Features
 
@@ -28,6 +27,19 @@ Tasks are stored locally in the browser. When the application starts:
 - Existing tasks are loaded from `localStorage`.
 - Default sample tasks are created if no saved task list exists.
 - Changes are automatically saved to `localStorage`.
+
+### Statistics dashboard
+
+The `/stats` page displays:
+
+- The total number of tasks.
+- The number of completed tasks.
+- The number of pending tasks.
+- A Chart.js pie chart comparing completed and pending tasks.
+
+The chart updates automatically when a task is completed or marked as pending.
+It is created only in the browser to remain compatible with Angular SSR and
+prerendering.
 
 ### Material Design interface
 
@@ -47,7 +59,7 @@ The application currently provides these routes:
 | Route | Description |
 |---|---|
 | `/tasks` | Main task list |
-| `/stats` | Statistics page placeholder |
+| `/stats` | Task statistics and completion chart |
 | `/` | Redirects to `/tasks` |
 
 Unknown routes are also redirected to `/tasks`.
@@ -60,6 +72,7 @@ Unknown routes are also redirected to `/tasks`.
 - Angular CDK
 - Angular Reactive Forms
 - Angular Router
+- Chart.js
 - Angular SSR and prerendering
 - Vitest
 - `localStorage` for client-side persistence
@@ -149,7 +162,8 @@ src/
 │   ├── components/
 │   │   ├── task-form/
 │   │   ├── task-item/
-│   │   └── task-list/
+│   │   ├── task-list/
+│   │   └── stats-display/
 │   ├── interfaces/
 │   │   ├── task.ts
 │   │   └── taskList.ts
@@ -170,3 +184,4 @@ src/
 - [Angular documentation](https://angular.dev/)
 - [Angular CLI documentation](https://angular.dev/tools/cli)
 - [Angular Material documentation](https://material.angular.dev/)
+- [Chart.js documentation](https://www.chartjs.org/docs/latest/)
