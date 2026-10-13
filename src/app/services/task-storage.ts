@@ -12,7 +12,7 @@ export class TaskStorage {
             id: crypto.randomUUID(),
             title: 'Préparer la présentation',
             description: 'Finaliser les diapositives et vérifier les exemples.',
-            dueDate: new Date('2026-10-15'),
+            dueDate: '2026-10-15',
             done: false,
             createdAt: new Date('2026-10-10'),
             updatedAt: new Date('2026-10-10'),
@@ -21,7 +21,7 @@ export class TaskStorage {
             id: crypto.randomUUID(),
             title: 'Répondre aux e-mails',
             description: 'Traiter les messages en attente et archiver les anciens.',
-            dueDate: new Date('2026-10-13'),
+            dueDate: '2026-10-13',
             done: true,
             createdAt: new Date('2026-10-09'),
             updatedAt: new Date('2026-10-13'),
@@ -32,11 +32,12 @@ export class TaskStorage {
         return this.tasks.asReadonly();
     }
 
-    addTask(data: { title: string; dueDate?: string }) {
+    addTask(data: { title: string; description?: string; dueDate?: string }) {
         const task: Task = {
             id: crypto.randomUUID(),
             title: data.title,
-            dueDate: data.dueDate ? new Date(data.dueDate) : undefined,
+            description: data.description,
+            dueDate: data.dueDate,
             done: false,
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -74,7 +75,6 @@ export class TaskStorage {
             this.tasks.set(
                 tasksArray.map((task) => ({
                     ...task,
-                    dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
                     createdAt: new Date(task.createdAt),
                     updatedAt: new Date(task.updatedAt),
                 })),
