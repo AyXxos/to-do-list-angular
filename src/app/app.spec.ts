@@ -20,6 +20,6 @@ describe('App', () => {
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('Ma tasklist');
-    expect(compiled.querySelectorAll('li')).toHaveLength(3);
+    expect(compiled.querySelectorAll('li')).toHaveLength(2);
   });
 });

@@ -14,8 +14,20 @@
     <textarea id="description" formControlName="description"></textarea>
     <br>
     <br>
-    <label for="due">Échéance facultative</label>
-    <input id="due" type="date" formControlName="dueDate">
+    <mat-form-field appearance="outline">
+        <mat-label>Échéance facultative</mat-label>
+        <input
+            matInput
+            [matDatepicker]="dueDatePicker"
+            formControlName="dueDate"
+            id="due"
+        >
+        <mat-datepicker-toggle
+            matIconSuffix
+            [for]="dueDatePicker"
+        />
+        <mat-datepicker #dueDatePicker />
+    </mat-form-field>
 
     <button type="submit" [disabled]="form.invalid">
         Ajouter
