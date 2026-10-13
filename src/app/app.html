@@ -1,19 +1,15 @@
-<main class="task-list">
-  <header class="task-list__header">
-    <div>
-      <h1>Ma tasklist</h1>
-    </div>
-    <div class="task-list__header-actions">
-      <span class="task-count">{{ taskList().tasks().length }} tâches</span>
-      <button mat-flat-button color="primary" type="button" (click)="openTaskForm()">
-        Ajouter une tâche
-      </button>
-    </div>
-  </header>
+<nav class="main-nav" aria-label="Navigation principale">
+  <a
+    mat-button
+    routerLink="/tasks"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Tâches
+  </a>
+  <a mat-button routerLink="/stats" routerLinkActive="active">
+    Stats
+  </a>
+</nav>
 
-  <app-task-list
-    [tasks]="taskList().tasks()"
-    (toggled)="onTaskToggled($event)"
-    (deleted)="onTaskDeleted($event)"
-  />
-</main>
+<router-outlet />

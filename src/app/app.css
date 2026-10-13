@@ -1,74 +1,23 @@
-.task-list {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 3rem 1.25rem 5rem;
-}
-
-.task-list__header {
+.main-nav {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: white;
 }
 
-.task-list__header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.task-list__header h1 {
-  margin: 0.35rem 0 0;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  letter-spacing: -0.04em;
-}
-
-.task-list__header p {
-  margin: 0.5rem 0 0;
-  color: #5f6368;
-}
-
-
-.task-count {
-  padding: 0.55rem 0.9rem;
-  border-radius: 999px;
+.main-nav a.active {
   background: #e8eaf6;
   color: #303f9f;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.task-list ul {
-  display: grid;
-  gap: 0.75rem;
-  padding: 0;
-  list-style: none;
-}
-
-.task-list li {
-  list-style: none;
-}
-
-.task-list app-task-list {
-  display: block;
-}
-
-.task-list > app-task-form + app-task-list {
-  margin-top: 1rem;
 }
 
 @media (max-width: 600px) {
-  .task-list {
-    padding-top: 1.5rem;
+  .main-nav {
+    justify-content: stretch;
   }
 
-  .task-list__header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .task-list__header-actions {
-    flex-wrap: wrap;
+  .main-nav a {
+    flex: 1;
   }
 }
