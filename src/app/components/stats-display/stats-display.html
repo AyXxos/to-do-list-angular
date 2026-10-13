@@ -1,5 +1,10 @@
 <div class="stats-display">
-    <p>Total tasks: {{ totalTasks }}</p>
-    <p>Completed tasks: {{ completedTasks }}</p>
-    <p>Pending tasks: {{ pendingTasks }}</p>
+    <div class="stats-summary">
+        <p>Total tasks: <strong>{{ totalTasks }}</strong></p>
+        <p>Completed tasks: <strong>{{ completedTasks }}</strong></p>
+        <p>Pending tasks: <strong>{{ pendingTasks }}</strong></p>
+    </div>
+    <div class="chart-container">
+        <canvas #tasksChart aria-label="Task completion chart"></canvas>
+    </div>
 </div>
