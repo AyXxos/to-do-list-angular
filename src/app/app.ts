@@ -2,9 +2,10 @@ import { Component, signal, inject } from '@angular/core';
 import { TaskList } from './interfaces/taskList';
 import { TaskStorage } from './services/task-storage';
 import { TaskListComponent } from './components/task-list/task-list';
+import { TaskForm } from './components/task-form/task-form';
 
 @Component({
-  imports: [TaskListComponent],
+  imports: [TaskListComponent, TaskForm],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

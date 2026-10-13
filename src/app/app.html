@@ -2,7 +2,7 @@
   <header class="task-list__header">
     <h1>Ma tasklist</h1>
   </header>
-
+  <app-task-form />
   <app-task-list
     [tasks]="taskList().tasks()"
     (toggled)="onTaskToggled($event)"
