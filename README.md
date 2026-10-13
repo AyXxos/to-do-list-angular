@@ -1,59 +1,172 @@
 # ToDoListAngular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.2.
+## Context
+
+
+
+## Overview
+
+ToDoListAngular is a task management application built with Angular. It allows
+users to:
+
+- View their task list.
+- Add a task through a Material Design dialog.
+- Set an optional title, description, and due date.
+- Mark tasks as completed or active.
+- Delete tasks.
+- Persist tasks in the browser's `localStorage`.
+- Navigate between the task list and a separate statistics page.
+
+The statistics page is currently a blank page intended for future development.
+
+## Features
+
+### Task management
+
+Tasks are stored locally in the browser. When the application starts:
+
+- Existing tasks are loaded from `localStorage`.
+- Default sample tasks are created if no saved task list exists.
+- Changes are automatically saved to `localStorage`.
+
+### Material Design interface
+
+The interface uses Angular Material components, including:
+
+- Cards for tasks and forms.
+- Buttons and icon buttons.
+- Checkboxes.
+- Form fields and validation messages.
+- A date picker for due dates.
+- A dialog for creating tasks.
+
+### Routing
+
+The application currently provides these routes:
+
+| Route | Description |
+|---|---|
+| `/tasks` | Main task list |
+| `/stats` | Statistics page placeholder |
+| `/` | Redirects to `/tasks` |
+
+Unknown routes are also redirected to `/tasks`.
+
+## Tech stack
+
+- Angular 22
+- TypeScript
+- Angular Material
+- Angular CDK
+- Angular Reactive Forms
+- Angular Router
+- Angular SSR and prerendering
+- Vitest
+- `localStorage` for client-side persistence
+
+## Requirements
+
+Make sure the following tools are installed:
+
+- Node.js
+- npm
+
+The project uses npm as its package manager. The required package manager
+version is declared in `package.json`.
+
+## Installation
+
+Clone the repository and move into the project directory:
+
+```bash
+git clone https://github.com/AyXxos/to-do-list-angular.git
+cd toDoListAngular
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
 
 ## Development server
 
-To start a local development server, run:
+Start the Angular development server:
+
+```bash
+npm start
+```
+
+Alternatively, use the Angular CLI directly:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Then open [http://localhost:4200/](http://localhost:4200/) in your browser.
+The application reloads automatically when source files change.
 
-## Code scaffolding
+## Production build
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Create a production build with:
 
 ```bash
-ng generate --help
+npm run build
 ```
 
-## Building
+Build artifacts are generated in the `dist/` directory.
 
-To build the project run:
+## Tests
+
+Run the test suite in watch mode:
 
 ```bash
-ng build
+npm test
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Run the tests once, without watch mode:
 
 ```bash
-ng test
+npm test -- --watch=false
 ```
 
-## Running end-to-end tests
+The project uses Vitest through the Angular CLI test builder.
 
-For end-to-end (e2e) testing, run:
+## SSR build output
+
+The project is configured with Angular SSR and prerendering. After building,
+the generated server can be started with:
 
 ```bash
-ng e2e
+npm run serve:ssr:toDoListAngular
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Project structure
 
-## Additional Resources
+```text
+src/
+├── app/
+│   ├── components/
+│   │   ├── task-form/
+│   │   ├── task-item/
+│   │   └── task-list/
+│   ├── interfaces/
+│   │   ├── task.ts
+│   │   └── taskList.ts
+│   ├── pages/
+│   │   ├── stats-page/
+│   │   └── task-page/
+│   ├── services/
+│   │   └── task-storage.ts
+│   ├── app.routes.ts
+│   └── app.config.ts
+├── index.html
+├── main.ts
+└── styles.css
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Useful documentation
+
+- [Angular documentation](https://angular.dev/)
+- [Angular CLI documentation](https://angular.dev/tools/cli)
+- [Angular Material documentation](https://material.angular.dev/)
