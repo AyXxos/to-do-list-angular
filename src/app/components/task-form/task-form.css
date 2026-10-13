@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.task-form-card {
+  border-radius: 1.25rem;
+}
+
+.dialog-intro {
+  margin-top: 0;
+  color: #5f6368;
+}
+
+form {
+  display: grid;
+  gap: 0.25rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button {
+  justify-self: start;
+  margin-top: 0.5rem;
+}

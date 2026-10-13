@@ -1,13 +1,20 @@
 import { Component, input, output } from '@angular/core';
 import { Task } from '../../interfaces/task';
 import { TaskItem } from '../task-item/task-item';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [TaskItem],
+  imports: [TaskItem, MatCardModule],
+  styleUrl: './task-list.css',
   template: `
-    <ul>
+    @if (tasks().length === 0) {
+      <mat-card class="empty-state">
+        <mat-card-content>Aucune tâche pour le moment.</mat-card-content>
+      </mat-card>
+    } @else {
+      <ul>
       @for (task of tasks(); track task.id) {
         <li>
           <app-task-item
@@ -17,7 +24,8 @@ import { TaskItem } from '../task-item/task-item';
           />
         </li>
       }
-    </ul>
+      </ul>
+    }
   `,
 })
 export class TaskListComponent {

@@ -7,6 +7,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-task-form', standalone: true,
@@ -16,11 +19,16 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
   ],
+  styleUrl: './task-form.css',
   templateUrl: './task-form.html'
 })
 export class TaskForm {
   private readonly taskStorage = inject(TaskStorage);
+  private readonly dialogRef = inject(MatDialogRef<TaskForm>, { optional: true });
   readonly form = new FormGroup({
     title: new FormControl('', {
       nonNullable: true,
@@ -43,6 +51,7 @@ export class TaskForm {
           ? this.formatDate(taskData.dueDate)
           : undefined,
       });
+      this.dialogRef?.close();
     }
   }
 

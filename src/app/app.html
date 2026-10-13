@@ -1,8 +1,16 @@
 <main class="task-list">
   <header class="task-list__header">
-    <h1>Ma tasklist</h1>
+    <div>
+      <h1>Ma tasklist</h1>
+    </div>
+    <div class="task-list__header-actions">
+      <span class="task-count">{{ taskList().tasks().length }} tâches</span>
+      <button mat-flat-button color="primary" type="button" (click)="openTaskForm()">
+        Ajouter une tâche
+      </button>
+    </div>
   </header>
-  <app-task-form />
+
   <app-task-list
     [tasks]="taskList().tasks()"
     (toggled)="onTaskToggled($event)"
