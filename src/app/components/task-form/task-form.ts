@@ -37,6 +37,7 @@ export class TaskForm {
   private readonly task = inject<Task | null>(MAT_DIALOG_DATA, {
     optional: true,
   });
+  readonly minimumDueDate = new Date();
   readonly form = new FormGroup({
     title: new FormControl('', {
       nonNullable: true,

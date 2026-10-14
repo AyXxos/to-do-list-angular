@@ -40,7 +40,7 @@ export class TaskStorage {
     }
 
     addTask(data: { title: string; description?: string; dueDate?: string }): boolean {
-        if (this.hasTaskTitle(data.title)) {
+        if (this.hasTaskTitle(data.title) || this.isPastDueDate(data.dueDate)) {
             return false;
         }
 
@@ -108,6 +108,20 @@ export class TaskStorage {
 
     private normalizeTitle(title: string): string {
         return title.trim().toLocaleLowerCase();
+    }
+
+    private isPastDueDate(dueDate?: string): boolean {
+        if (!dueDate) {
+            return false;
+        }
+
+        const today = new Date();
+        const todayString = [
+            today.getFullYear(),
+            String(today.getMonth() + 1).padStart(2, '0'),
+            String(today.getDate()).padStart(2, '0'),
+        ].join('-');
+        return dueDate < todayString;
     }
 
     private saveTasksToLocalStorage() {

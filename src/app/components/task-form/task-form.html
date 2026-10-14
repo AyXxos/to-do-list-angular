@@ -29,9 +29,13 @@
                 <input
                     matInput
                     [matDatepicker]="dueDatePicker"
+                    [min]="task ? null : minimumDueDate"
                     formControlName="dueDate"
                     id="due"
                 >
+                @if (form.controls.dueDate.hasError('matDatepickerMin')) {
+                    <mat-error>L'échéance ne peut pas être antérieure à aujourd'hui.</mat-error>
+                }
                 <mat-datepicker-toggle matIconSuffix [for]="dueDatePicker" />
                 <mat-datepicker #dueDatePicker />
             </mat-form-field>
