@@ -5,7 +5,9 @@
             <mat-form-field appearance="outline">
                 <mat-label>Titre</mat-label>
                 <input matInput id="title" formControlName="title">
-                @if (form.controls.title.touched && form.controls.title.invalid) {
+                @if (form.controls.title.hasError('duplicate')) {
+                    <mat-error>Une tâche avec ce titre existe déjà.</mat-error>
+                } @else if (form.controls.title.touched && form.controls.title.invalid) {
                     <mat-error>Le titre doit contenir au moins 3 caractères.</mat-error>
                 }
             </mat-form-field>

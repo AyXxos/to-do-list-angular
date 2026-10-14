@@ -41,17 +41,37 @@ export class TaskForm {
     createdAt: new FormControl(new Date(), { nonNullable: true }),
     updatedAt: new FormControl(new Date(), { nonNullable: true })
   });
-  submit() {
+  constructor() {
+    this.form.controls.title.valueChanges.subscribe(() => {
+      const titleControl = this.form.controls.title;
+      if (titleControl.hasError('duplicate')) {
+        const errors = { ...titleControl.errors };
+        delete errors['duplicate'];
+        titleControl.setErrors(Object.keys(errors).length > 0 ? errors : null);
+      }
+    });
+  }
+
+  submit(): void {
     if (this.form.valid) {
       const taskData = this.form.getRawValue();
-      this.taskStorage.addTask({
+      const taskAdded = this.taskStorage.addTask({
         title: taskData.title,
         description: taskData.description,
         dueDate: taskData.dueDate
           ? this.formatDate(taskData.dueDate)
           : undefined,
       });
-      this.dialogRef?.close();
+
+      if (taskAdded) {
+        this.dialogRef?.close();
+      } else {
+        this.form.controls.title.setErrors({
+          ...this.form.controls.title.errors,
+          duplicate: true,
+        });
+        this.form.controls.title.markAsTouched();
+      }
     }
   }
 

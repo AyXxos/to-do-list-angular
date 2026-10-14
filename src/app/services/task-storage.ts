@@ -32,7 +32,18 @@ export class TaskStorage {
         return this.tasks.asReadonly();
     }
 
-    addTask(data: { title: string; description?: string; dueDate?: string }) {
+    hasTaskTitle(title: string): boolean {
+        const normalizedTitle = this.normalizeTitle(title);
+        return this.tasks().some(
+            (task) => this.normalizeTitle(task.title) === normalizedTitle,
+        );
+    }
+
+    addTask(data: { title: string; description?: string; dueDate?: string }): boolean {
+        if (this.hasTaskTitle(data.title)) {
+            return false;
+        }
+
         const task: Task = {
             id: crypto.randomUUID(),
             title: data.title,
@@ -43,6 +54,7 @@ export class TaskStorage {
             updatedAt: new Date(),
         };
         this.tasks.update((tasks) => [...tasks, task]);
+        return true;
     }
 
     toggleTaskDone(taskId: string) {
@@ -59,6 +71,9 @@ export class TaskStorage {
         this.tasks.update((tasks) => tasks.filter((task) => task.id !== taskId));
     }
 
+    private normalizeTitle(title: string): string {
+        return title.trim().toLocaleLowerCase();
+    }
 
     private saveTasksToLocalStorage() {
         localStorage.setItem('tasks', JSON.stringify(this.tasks()));
