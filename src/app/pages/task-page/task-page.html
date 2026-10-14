@@ -2,6 +2,35 @@
   <header class="task-list__header">
     <div>
       <h1>Ma tasklist</h1>
+      <div class="task-filters" aria-label="Filtrer les tâches">
+        <button
+          mat-button
+          type="button"
+          [class.task-filter--active]="activeFilter() === 'all'"
+          [attr.aria-pressed]="activeFilter() === 'all'"
+          (click)="setFilter('all')"
+        >
+          Toutes
+        </button>
+        <button
+          mat-button
+          type="button"
+          [class.task-filter--active]="activeFilter() === 'todo'"
+          [attr.aria-pressed]="activeFilter() === 'todo'"
+          (click)="setFilter('todo')"
+        >
+          À faire
+        </button>
+        <button
+          mat-button
+          type="button"
+          [class.task-filter--active]="activeFilter() === 'done'"
+          [attr.aria-pressed]="activeFilter() === 'done'"
+          (click)="setFilter('done')"
+        >
+          Faites
+        </button>
+      </div>
     </div>
     <div class="task-list__header-actions">
       <span class="task-count">{{ taskList().tasks().length }} tâches</span>
@@ -12,7 +41,7 @@
   </header>
 
   <app-task-list
-    [tasks]="taskList().tasks()"
+    [tasks]="filteredTasks()"
     (toggled)="onTaskToggled($event)"
     (deleted)="onTaskDeleted($event)"
   />

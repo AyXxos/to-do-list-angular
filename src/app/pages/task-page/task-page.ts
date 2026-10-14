@@ -1,10 +1,12 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskList } from '../../interfaces/taskList';
 import { TaskStorage } from '../../services/task-storage';
 import { TaskForm } from '../../components/task-form/task-form';
 import { TaskListComponent } from '../../components/task-list/task-list';
+
+type TaskFilter = 'all' | 'todo' | 'done';
 
 @Component({
   selector: 'app-task-page',
@@ -19,6 +21,25 @@ export class TaskPage {
   readonly taskList = signal<TaskList>({
     tasks: this.taskStorage.getTasks(),
   });
+  readonly activeFilter = signal<TaskFilter>('all');
+  readonly filteredTasks = computed(() => {
+    const tasks = this.taskList().tasks();
+    const filter = this.activeFilter();
+
+    if (filter === 'todo') {
+      return tasks.filter((task) => !task.done);
+    }
+
+    if (filter === 'done') {
+      return tasks.filter((task) => task.done);
+    }
+
+    return tasks;
+  });
+
+  setFilter(filter: TaskFilter): void {
+    this.activeFilter.set(filter);
+  }
 
   onTaskToggled(taskId: string): void {
     this.taskStorage.toggleTaskDone(taskId);
