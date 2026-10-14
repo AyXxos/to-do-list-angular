@@ -43,6 +43,7 @@
   <app-task-list
     [tasks]="sortedTasks()"
     (toggled)="onTaskToggled($event)"
+    (edited)="onTaskEdited($event)"
     (deleted)="onTaskDeleted($event)"
   />
 </main>

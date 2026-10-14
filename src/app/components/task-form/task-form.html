@@ -1,7 +1,9 @@
-<h2 mat-dialog-title>Nouvelle tâche</h2>
+<h2 mat-dialog-title>{{ task ? 'Modifier la tâche' : 'Nouvelle tâche' }}</h2>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <mat-dialog-content>
-        <p class="dialog-intro">Organise ta prochaine action.</p>
+        <p class="dialog-intro">
+            {{ task ? 'Mets à jour les informations de cette tâche.' : 'Organise ta prochaine action.' }}
+        </p>
             <mat-form-field appearance="outline">
                 <mat-label>Titre</mat-label>
                 <input matInput id="title" formControlName="title">
@@ -37,7 +39,7 @@
     <mat-dialog-actions align="end">
         <button mat-button type="button" mat-dialog-close>Annuler</button>
         <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
-            Ajouter la tâche
+            {{ task ? 'Enregistrer les modifications' : 'Ajouter la tâche' }}
         </button>
     </mat-dialog-actions>
 </form>

@@ -57,6 +57,41 @@ export class TaskStorage {
         return true;
     }
 
+    updateTask(
+        taskId: string,
+        data: { title: string; description?: string; dueDate?: string },
+    ): boolean {
+        const normalizedTitle = this.normalizeTitle(data.title);
+        const hasDuplicateTitle = this.tasks().some(
+            (task) =>
+                task.id !== taskId &&
+                this.normalizeTitle(task.title) === normalizedTitle,
+        );
+
+        if (hasDuplicateTitle) {
+            return false;
+        }
+
+        let taskUpdated = false;
+        this.tasks.update((tasks) =>
+            tasks.map((task) => {
+                if (task.id !== taskId) {
+                    return task;
+                }
+
+                taskUpdated = true;
+                return {
+                    ...task,
+                    title: data.title,
+                    description: data.description,
+                    dueDate: data.dueDate,
+                    updatedAt: new Date(),
+                };
+            }),
+        );
+        return taskUpdated;
+    }
+
     toggleTaskDone(taskId: string) {
         this.tasks.update((tasks) =>
             tasks.map((task) =>

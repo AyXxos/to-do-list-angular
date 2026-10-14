@@ -20,6 +20,7 @@ import { MatCardModule } from '@angular/material/card';
           <app-task-item
             [task]="task"
             (toggled)="toggled.emit($event)"
+            (edited)="edited.emit($event)"
             (deleted)="deleted.emit($event)"
           />
         </li>
@@ -31,5 +32,6 @@ import { MatCardModule } from '@angular/material/card';
 export class TaskListComponent {
   readonly tasks = input.required<Task[]>();
   readonly toggled = output<string>();
+  readonly edited = output<Task>();
   readonly deleted = output<string>();
 }

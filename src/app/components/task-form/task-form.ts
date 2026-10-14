@@ -9,7 +9,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { Task } from '../../interfaces/task';
 
 @Component({
   selector: 'app-task-form', standalone: true,
@@ -29,6 +34,9 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 export class TaskForm {
   private readonly taskStorage = inject(TaskStorage);
   private readonly dialogRef = inject(MatDialogRef<TaskForm>, { optional: true });
+  private readonly task = inject<Task | null>(MAT_DIALOG_DATA, {
+    optional: true,
+  });
   readonly form = new FormGroup({
     title: new FormControl('', {
       nonNullable: true,
@@ -42,6 +50,19 @@ export class TaskForm {
     updatedAt: new FormControl(new Date(), { nonNullable: true })
   });
   constructor() {
+    if (this.task) {
+      this.form.patchValue({
+        title: this.task.title,
+        description: this.task.description ?? '',
+        dueDate: this.task.dueDate
+          ? this.parseDate(this.task.dueDate)
+          : null,
+        done: this.task.done,
+        createdAt: this.task.createdAt,
+        updatedAt: this.task.updatedAt,
+      });
+    }
+
     this.form.controls.title.valueChanges.subscribe(() => {
       const titleControl = this.form.controls.title;
       if (titleControl.hasError('duplicate')) {
@@ -55,15 +76,18 @@ export class TaskForm {
   submit(): void {
     if (this.form.valid) {
       const taskData = this.form.getRawValue();
-      const taskAdded = this.taskStorage.addTask({
+      const taskDataToSave = {
         title: taskData.title,
         description: taskData.description,
         dueDate: taskData.dueDate
           ? this.formatDate(taskData.dueDate)
           : undefined,
-      });
+      };
+      const taskSaved = this.task
+        ? this.taskStorage.updateTask(this.task.id, taskDataToSave)
+        : this.taskStorage.addTask(taskDataToSave);
 
-      if (taskAdded) {
+      if (taskSaved) {
         this.dialogRef?.close();
       } else {
         this.form.controls.title.setErrors({
@@ -80,5 +104,10 @@ export class TaskForm {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+  }
+
+  private parseDate(date: string): Date {
+    const [year, month, day] = date.split('-').map(Number);
+    return new Date(year, month - 1, day);
   }
 }

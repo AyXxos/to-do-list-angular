@@ -30,6 +30,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
           <button mat-icon-button type="button" (click)="toggled.emit(task().id)" aria-label="Changer le statut">
             {{ task().done ? '↩' : '✓' }}
           </button>
+          <button mat-icon-button type="button" (click)="edited.emit(task())" aria-label="Modifier la tâche">
+            ✎
+          </button>
           <button mat-icon-button type="button" (click)="deleted.emit(task().id)" aria-label="Supprimer la tâche">
             ×
           </button>
@@ -41,5 +44,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 export class TaskItem {
   readonly task = input.required<Task>();
   readonly toggled = output<string>();
+  readonly edited = output<Task>();
   readonly deleted = output<string>();
 }

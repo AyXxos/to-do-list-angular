@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskList } from '../../interfaces/taskList';
+import { Task } from '../../interfaces/task';
 import { TaskStorage } from '../../services/task-storage';
 import { TaskForm } from '../../components/task-form/task-form';
 import { TaskListComponent } from '../../components/task-list/task-list';
@@ -71,6 +72,15 @@ export class TaskPage {
 
   onTaskDeleted(taskId: string): void {
     this.taskStorage.deleteTask(taskId);
+  }
+
+  onTaskEdited(task: Task): void {
+    this.dialog.open(TaskForm, {
+      data: task,
+      width: 'min(560px, calc(100vw - 2rem))',
+      maxWidth: '100vw',
+      autoFocus: 'first-tabbable',
+    });
   }
 
   openTaskForm(): void {
