@@ -1,8 +1,8 @@
-# ToDoListAngular
+# To Do List Angular
 
 ## Context
 
-
+The to do list angular project is a task management application built with Angular. It allows users to create, manage, their tasks and view statistics about their task completion. It is developed as part of Js frameworks course at Sup De Vinci, and it is designed to demonstrate the use of Angular features such as components, services, routing, and state management. 
 
 ## Overview
 
