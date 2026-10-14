@@ -22,6 +22,13 @@ export class TaskPage {
     tasks: this.taskStorage.getTasks(),
   });
   readonly activeFilter = signal<TaskFilter>('all');
+  readonly totalTasks = computed(() => this.taskList().tasks().length);
+  readonly pendingTasks = computed(() =>
+    this.taskList().tasks().filter((task) => !task.done).length,
+  );
+  readonly completedTasks = computed(() =>
+    this.taskList().tasks().filter((task) => task.done).length,
+  );
   readonly filteredTasks = computed(() => {
     const tasks = this.taskList().tasks();
     const filter = this.activeFilter();
@@ -36,6 +43,23 @@ export class TaskPage {
 
     return tasks;
   });
+  readonly sortedTasks = computed(() =>
+    [...this.filteredTasks()].sort((firstTask, secondTask) => {
+      if (!firstTask.dueDate && !secondTask.dueDate) {
+        return secondTask.createdAt.getTime() - firstTask.createdAt.getTime();
+      }
+
+      if (!firstTask.dueDate) {
+        return 1;
+      }
+
+      if (!secondTask.dueDate) {
+        return -1;
+      }
+
+      return firstTask.dueDate.localeCompare(secondTask.dueDate);
+    }),
+  );
 
   setFilter(filter: TaskFilter): void {
     this.activeFilter.set(filter);
